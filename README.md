@@ -1,10 +1,10 @@
 # Freenove WS2812B RGBLED Controller
 
 ## Description
-This is a Arduino library for Freenove WS2812B RGBLED Controller (Shorter name "Controller").
-Although Arduino can directly control WS2812B LED, it needs to shut down all interrupts to ensure normal communication. It's very inconvenient.
-The controller solves this problem well. It uses I2C or UART to communicate with Arduino. So you can easily control WS2812B LED through it.
-And you can add it to almost all your Arduino projects without affecting them. Make your work look cool!
+This is a Arduino library for Freenove WS2812B RGBLED Controller (Shorter name "Controller").<br />
+Although Arduino can directly control WS2812B LED, it needs to shut down all interrupts to ensure normal communication. It's very inconvenient.<br />
+The controller solves this problem well. It uses I2C or UART to communicate with Arduino. So you can easily control WS2812B LED through it.<br />
+And you can add it to almost all your Arduino projects without affecting them. Make your work look cool!<br />
 
 ## Examples:
 
@@ -71,11 +71,7 @@ strip.setLedColor(id, color);
 strip.setLedColor(id, r, g, b);
 ```
 * Send color data and display it immediately.
-* It is equivalent to
-```
-strip.setLedColorData(id, color);
-strip.show();
-```
+* It is equivalent to "strip.setLedColorData(id, color); strip.show();"
 	* id: the index of led.
 	* color: color value. egg, 0xFF0000 is RED color.
 	* r,g,b: color value. 0-255.
@@ -85,5 +81,5 @@ strip.Wheel(i)
 ```
 * A simple color picker.
 	*i:0-255.
-<img src='extras/ColorWheel.jpg' width='50%'/>
+<img src='extras/ColorWheel.jpg' width='100%'/>
 
