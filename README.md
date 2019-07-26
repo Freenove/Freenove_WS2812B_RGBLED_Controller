@@ -76,6 +76,6 @@ strip.setLedColor(id, r, g, b);
 strip.Wheel(i)
 ```
 * A simple color picker.
-	* i:0-255.
+	* i: 0-255.
 <img src='extras/ColorWheel.jpg' width='100%'/>
 
