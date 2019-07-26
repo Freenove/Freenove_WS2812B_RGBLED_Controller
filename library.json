@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/Freenove/Freenove_WS2812B_RGBLED_Controller.git"
   },
-  "frameworks": "arduino",
+  "frameworks": "arduino"
   "platforms":
   [
     "atmelavr"
