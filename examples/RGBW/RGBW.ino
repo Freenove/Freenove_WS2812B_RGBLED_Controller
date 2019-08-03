@@ -3,19 +3,23 @@
 #define I2C_ADDRESS  0x20
 #define LEDS_COUNT   10
 
-//Freenove_WS2812B_Controller strip(&Serial1, LEDS_COUNT, TYPE_GRB, 115200UL);
 Freenove_WS2812B_Controller strip(I2C_ADDRESS, LEDS_COUNT, TYPE_GRB);
+
+u8 m_color[5][3] = {{255, 0, 0}, {0, 255, 0}, {0, 0, 255}, {255, 255, 255}, {0, 0, 0}};
+
+int delayval = 100;
 
 void setup() {
   while (!strip.begin());
 }
 
 void loop() {
-  for (int j = 0; j < 255; j += 2) {
+  for (int j = 0; j < 5; j++) {
     for (int i = 0; i < LEDS_COUNT; i++) {
-      strip.setLedColorData(i, strip.Wheel((i * 256 / LEDS_COUNT + j) & 255));
+      strip.setLedColor(i, m_color[j][0], m_color[j][1], m_color[j][2]);
+      strip.show();
+      delay(delayval);
     }
-    strip.show();
-    delay(2);
-  }  
+    delay(500);
+  }
 }

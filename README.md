@@ -18,8 +18,8 @@ This example make your strip show a flowing rainbow.
 #define I2C_ADDRESS  0x20
 #define LEDS_COUNT   10
 
-//Freenove_WS2812B_Controller strip(&Serial1,115200UL, LEDS_COUNT);
-Freenove_WS2812B_Controller strip(I2C_ADDRESS, LEDS_COUNT);
+//Freenove_WS2812B_Controller strip(&Serial1, LEDS_COUNT, TYPE_GRB, 115200UL);
+Freenove_WS2812B_Controller strip(I2C_ADDRESS, LEDS_COUNT, TYPE_GRB);
 
 void setup() {
   while (!strip.begin());
@@ -38,8 +38,8 @@ void loop() {
 
 ## Usage
 ```
-//Freenove_WS2812B_Controller strip(&Serial1,115200UL, LEDS_COUNT);
-Freenove_WS2812B_Controller strip(I2C_ADDRESS, LEDS_COUNT);
+//Freenove_WS2812B_Controller strip(&Serial1, LEDS_COUNT, TYPE_GRB, 115200UL);
+Freenove_WS2812B_Controller strip(I2C_ADDRESS, LEDS_COUNT, TYPE_GRB);
 ```
 * Construction. Create a Controller object. The construction parameters determine the communication mode, I2C or UART.
 

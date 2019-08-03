@@ -1,10 +1,10 @@
 // Freenove_WS2812B_RGBLED_Controller.h
 /**
- * Brief	Apply to Freenove WS2812B RGBLED Controller. 
+ * Brief	Apply to Freenove WS2812B RGBLED Controller.
  *			You can use I2C or UART to communicate.
  * Author	SuhaylZhao
  * Company	Freenove
- * Date		2019-7-20
+ * Date		2019-08-03
  */
 
 #ifndef _FREENOVE_WS2812B_RGBLED_CONTROLLER_h
@@ -17,7 +17,7 @@
 #endif
 
 #include <Wire.h>
-//#include <SoftwareSerial.h>
+ //#include <SoftwareSerial.h>
 
 
 #define REG_LEDS_COUNTS					0
@@ -27,14 +27,16 @@
 #define REG_SET_ALL_LEDS_COLOR			4
 #define REG_TRANS_DATA_TO_LED			5
 
-#define REG_READ_I2C_ADDRESS			251
-#define REG_GET_UART_BAUDRATE			251
+#define REG_LEDS_COUNT_READ				0xfa
 
-#define REG_SET_UART_BAUDRATE			252
-#define REG_SET_I2C_ADDRESS				253
+#define REG_READ_I2C_ADDRESS			0xfb
+#define REG_GET_UART_BAUDRATE			0xfb
 
-#define REG_GET_BRAND					254
-#define REG_GET_FIRMWARE_VERSION		255
+#define REG_SET_UART_BAUDRATE			0xfc
+#define REG_SET_I2C_ADDRESS				0xfd
+
+#define REG_GET_BRAND					0xfe
+#define REG_GET_FIRMWARE_VERSION		0xff
 
 #define I2C_COMMUNICATION_MODE			0
 #define UART_COMMUNICATION_MODE			1
@@ -48,16 +50,37 @@
 #define UART_END_BYTE					0xdd
 #define UART_ACK_BYTE					0x06
 
+//#define TYPE_RGB						0x06	
+//#define TYPE_RBG						0x09	
+//#define TYPE_GRB						0x12	
+//#define TYPE_GBR						0x21	
+//#define TYPE_BRG						0x18	
+//#define TYPE_BGR						0x24	
+
+enum LED_TYPE
+{					  //R  G  B
+	TYPE_RGB = 0x06,  //00 01 10
+	TYPE_RBG = 0x09,  //00 10 01
+	TYPE_GRB = 0x12,  //01 00 10
+	TYPE_GBR = 0x21,  //10 00 01
+	TYPE_BRG = 0x18,  //01 10 00
+	TYPE_BGR = 0x24	  //10 01 00
+};
+
 const u32 _BAUDRATE[] = { 115200, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200, 128000, 230400, 500000 };
 
 class Freenove_WS2812B_Controller
 {
-private:
+protected:
 	u8 I2C_Address;
 	u8 uartBaudrateIndex;
 	u8 commMode;
 	u16 ledCounts;
 	u32 uartWaitAckTime;	//unit: us
+	u8 rOffset;
+	u8 gOffset;
+	u8 bOffset;
+
 	HardwareSerial *_serial;
 	//HardwareSerial *hdSerial;
 	//SoftwareSerial *swSerial;
@@ -66,13 +89,15 @@ private:
 	int readReg(uint8_t cmd, char *recv, u16 count);
 	//bool i2cWriteDataToController(u8 cmd, u8 *value, u8 size_a);
 	bool uartWriteDataToControllerWithAck(u8 param[5], bool isShowLed = false);
+	
 public:
-	Freenove_WS2812B_Controller(u8 _address = 0x20, u16 n = 8);
-	Freenove_WS2812B_Controller(HardwareSerial *serial_param, u32 _baudrate = 115200, u16 n = 8);
+	Freenove_WS2812B_Controller(u8 _address = 0x20, u16 n = 8 , LED_TYPE t = TYPE_GRB);
+	Freenove_WS2812B_Controller(HardwareSerial *serial_param, u16 n = 8, LED_TYPE t = TYPE_GRB, u32 _baudrate = 115200);
 	//Freenove_WS2812B_Controller(SoftwareSerial *serial_param, u32 _baudrate = 115200, u16 n = 8);
 
 	bool begin();
 	bool setLedCount(u16 n);
+	void setLedType(LED_TYPE t);
 
 	bool setLedColorData(u8 index, u32 rgb);
 	bool setLedColorData(u8 index, u8 r, u8 g, u8 b);
@@ -88,6 +113,7 @@ public:
 
 	bool show();
 
+	u8 getLedsCountFromController();
 	u8 getI2CAddress();
 	u32 getUartBaudrate();
 	bool setUartBaudrate(u32 _baudrate);
@@ -95,7 +121,7 @@ public:
 	String getBrand();
 	String getFirmwareVersion();
 
-	uint32_t Wheel(byte pos); 
+	uint32_t Wheel(byte pos);
 };
 
 #endif
