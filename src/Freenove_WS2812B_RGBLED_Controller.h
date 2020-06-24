@@ -67,6 +67,10 @@ enum LED_TYPE
 	TYPE_BGR = 0x24	  //10 01 00
 };
 
+typedef unsigned char u8;
+typedef unsigned short u16;
+typedef unsigned long u32;
+
 const u32 _BAUDRATE[] = { 115200, 1200, 2400, 4800, 9600, 14400, 19200, 38400, 57600, 115200, 128000, 230400, 500000 };
 
 class Freenove_WS2812B_Controller

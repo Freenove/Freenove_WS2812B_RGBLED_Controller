@@ -28,11 +28,11 @@ int Freenove_WS2812B_Controller::writeReg(uint8_t cmd, u8 * value, u8 size_a)
 
 int Freenove_WS2812B_Controller::readReg(uint8_t cmd, char * recv, u16 count)
 {
-	//Wire.beginTransmission(I2C_Address);
-	//Wire.write(cmd);
-	//Wire.endTransmission(false);
-	//Wire.requestFrom(I2C_Address, count);
-	Wire.requestFrom(I2C_Address, count, cmd, 1, true);
+	Wire.beginTransmission(I2C_Address);
+	Wire.write(cmd);
+	Wire.endTransmission(false);
+	Wire.requestFrom(I2C_Address, count);
+	//Wire.requestFrom(I2C_Address, count, cmd, 1, true);
 	int i = 0;
 	while (Wire.available()) {
 		recv[i++] = Wire.read();
