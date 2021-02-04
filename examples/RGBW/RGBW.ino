@@ -17,7 +17,6 @@ void loop() {
   for (int j = 0; j < 5; j++) {
     for (int i = 0; i < LEDS_COUNT; i++) {
       strip.setLedColor(i, m_color[j][0], m_color[j][1], m_color[j][2]);
-      strip.show();
       delay(delayval);
     }
     delay(500);
