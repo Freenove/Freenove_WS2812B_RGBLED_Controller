@@ -4,7 +4,7 @@
  *			You can use I2C or UART to communicate.
  * Author	SuhaylZhao
  * Company	Freenove
- * Date		2019-08-03
+ * Date		2021-02-04
  */
 
 #include "Freenove_WS2812B_RGBLED_Controller.h"
@@ -57,7 +57,7 @@ bool Freenove_WS2812B_Controller::uartWriteDataToControllerWithAck(u8 param[5], 
 	_serial->write(arr, sizeof(arr));
 	if (isShowLed)
 	{
-		if (uartWaitAckTime > 60000)
+		if (uartWaitAckTime > 16383)        //delayMicroseconds max:16383
 		{
 			delay(uartWaitAckTime / 1000 + 1);
 		}
@@ -68,7 +68,7 @@ bool Freenove_WS2812B_Controller::uartWriteDataToControllerWithAck(u8 param[5], 
 	}
 	else
 	{
-		delayMicroseconds(2000);
+		delayMicroseconds(9000);
 	}
 
 	u8 ack;
@@ -91,7 +91,7 @@ Freenove_WS2812B_Controller::Freenove_WS2812B_Controller(u8 _address, u16 n, LED
 	commMode = I2C_COMMUNICATION_MODE;
 	I2C_Address = (u8)_address;
 	ledCounts = n;
-	uartWaitAckTime = (280 + ledCounts * 53) + 3000;
+	uartWaitAckTime = (280 + ledCounts * 40) + 10000;    //
 	setLedType(t);
 }
 
@@ -108,7 +108,7 @@ Freenove_WS2812B_Controller::Freenove_WS2812B_Controller(HardwareSerial *serial_
 	}
 	commMode = UART_COMMUNICATION_MODE;
 	ledCounts = n;
-	uartWaitAckTime = (280 + ledCounts * 53) + 3000;
+	uartWaitAckTime = (280 + ledCounts * 40) + 10000;   //
 	_serial = serial_param;
 	setLedType(t);
 }
